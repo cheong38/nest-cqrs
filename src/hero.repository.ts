@@ -6,4 +6,6 @@ export interface HeroRepository {
   findOneById(heroId: string): Promise<Hero>;
 
   persist(hero: Hero): Promise<void>;
+
+  findAll(): Promise<Hero[]>;
 }

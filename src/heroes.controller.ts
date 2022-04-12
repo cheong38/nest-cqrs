@@ -1,6 +1,7 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { KillDragonCommand } from './kill-dragon.command';
+import { GetHeroesQuery } from './get-heroes.query';
 
 class HeroKillBody {
   dragonId: string;
@@ -8,7 +9,15 @@ class HeroKillBody {
 
 @Controller('heroes')
 export class HeroesController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
+
+  @Get()
+  async getAll() {
+    return await this.queryBus.execute(new GetHeroesQuery());
+  }
 
   @Post(':id/kill')
   async kill(@Param('id') heroId: string, @Body() body: HeroKillBody) {

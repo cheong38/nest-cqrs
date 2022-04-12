@@ -6,6 +6,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { KillDragonHandler } from './kill-dragon.handler';
 import { HERO_REPOSITORY } from './hero.repository';
 import { InMemoryHeroRepository } from './in-memory-hero.repository';
+import { GetHeroesHandler } from './get-heroes.handler';
 
 @Module({
   imports: [CqrsModule],
@@ -13,6 +14,7 @@ import { InMemoryHeroRepository } from './in-memory-hero.repository';
   providers: [
     AppService,
     KillDragonHandler,
+    GetHeroesHandler,
     {
       provide: HERO_REPOSITORY,
       useClass: InMemoryHeroRepository,
